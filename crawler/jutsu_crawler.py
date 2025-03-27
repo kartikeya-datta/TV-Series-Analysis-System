@@ -3,15 +3,16 @@ from bs4 import BeautifulSoup
 
 class BlogSpider(scrapy.Spider):
     name = 'narutospider'
-    start_urls = ['https://naruto.fandom.com/wiki/Concept:Jutsu/Canon?limit=500&offset=0&from=&until=&value=#smw-result']
+    start_urls = ['https://naruto.fandom.com/wiki/Concept:Jutsu?limit=500&offset=0&from=&until=&value=#smw-result']
 
     def parse(self, response):
         for href in response.css('.smw-columnlist-container')[0].css('a::attr(href)').extract():
             extracted_data = scrapy.Request("https://naruto.fandom.com" + href, callback=self.parse_jutsu)
             yield extracted_data
 
-        for next_page in response.css('a.page-link'):
-            yield response.follow(next_page, self.parse)
+        next_page = response.css('a.page-link[title="Next 500 results"]::attr(href)').get()
+        if next_page:
+             yield response.follow(next_page, self.parse)
             
     def parse_jutsu(self, response):
             jutsu_name = response.css("span.mw-page-title-main::text").extract()[0]
