@@ -8,3 +8,5 @@
 I am finetuning the transfoemer model on different themes [friendhip", "hope", "sacrifice", "Loss", "battle", "self developmet", "betrayal", "love", "dialogue"]
 
 - Created a dataframe by loading it into our loading the subtitles into our jupyter notebook and cleaning the subtitle data.
+
+- Created a new colums stating the themes of the subtitles we have with huggingface library.
