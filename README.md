@@ -1,12 +1,22 @@
-- In tihs I will Develop a website using different features and technolagies I have laerned to create a universe of one my favourite anime namely naruto.
+- In this I will Develop a website using different features and technolagies I have laerned to create a universe of one my favourite anime namely naruto.
 
-- I have done some we scraping using crawler to get information about different jutsus used in the ninja world of naruto. To classify and define different jutsus used. i\I preffered web scrapping as I could not fing a proper datset to use to get the entire list of jutsus, hence I had to scrape it from the web itself.
+## Theme Analysis Process in the jupyter notebook:
 
-- I will be applying zero shot classifier. I will tsake two inputs. The premise  which is the text and the hypothesis which is the class. The output will be three different classes, namely Entailment, nuetral and controdiction. I will be using the hugging face library to do this.
-
-- I am using a NLP model namely [facebook-Bart](https://huggingface.co/facebook/bart-large-mnli)
-I am finetuning the transfoemer model on different themes [friendhip", "hope", "sacrifice", "Loss", "battle", "self developmet", "betrayal", "love", "dialogue"]
-
-- Created a dataframe by loading it into our loading the subtitles into our jupyter notebook and cleaning the subtitle data.
-
-- Created a new colums stating the themes of the subtitles we have with huggingface library.
+* **Model Loading and Setup:**
+    * The "facebook/bart-large-mnli" model was loaded for zero-shot classification, configured for PyTorch and to run on a GPU if available.
+    * A list of themes (`theme_list`) was defined for the classification task.
+    * A test classification was performed on a sample sentence to ensure the model was working.
+* **Subtitle Data Processing:**
+    * Subtitle files were loaded from the `../data/Subtitles/` directory.
+    * The subtitle data was cleaned, removing header information and formatting characters.
+    * The cleaned dialogue was concatenated into single strings for each episode.
+    * The episode number was also extracted from each file name.
+    * The data was then loaded into a pandas DataFrame.
+* **Sentence Batching:**
+    * The dialogue for each episode was split into sentences using NLTK's `sent_tokenize`.
+    * To accommodate the model's token limit, sentences were grouped into batches of 20.
+* **Theme Inference:**
+    * The zero-shot classification model was applied to each batch of sentences.
+    * The model's output (theme scores) was aggregated and averaged to produce a thematic profile for each episode.
+* **DataFrame Enrichment:**
+    * The resulting theme data was then added to the original DataFrame, to create a DataFrame that contained both the original subtitle data and the theme classification data.
