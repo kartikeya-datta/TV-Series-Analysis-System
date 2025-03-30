@@ -30,5 +30,5 @@ _ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle,
 
 - I have used the GPU of google colab to compute my theme classification outputnand stored it in the stubs folder to save the current data and use it to represenrt the theme classsification.
 
-![Theme Classification output](data/images/Screenshot 2025-03-30 at 5.54.58 PM.png)
+![Theme Classification output](data/images/Screenshot_2025-03-30_at_5-54-58_PM.png)
 
