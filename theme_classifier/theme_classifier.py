@@ -40,7 +40,7 @@ class ThemeClassifier():
             
         # Run the model
         theme_output = self.theme_classifier(
-            script_batches[:],
+            script_batches,
             self.theme_list,
             multilabel=True
         )
@@ -58,7 +58,10 @@ class ThemeClassifier():
         return themes
     
     def get_themes(self, dataset_path, save_path=None):
-        
+        #Read saved output if exists
+        if save_path is not None and os.path.exists(save_path):
+            df = pd.read_csv(save_path)
+            return df
         #Load the Dataset
         df = load_subtitles_dataset(dataset_path)
         
@@ -71,4 +74,6 @@ class ThemeClassifier():
         #Saving the Output
         if save_path is not None:
             df.to_csv(save_path, index=False)
+            
+        return df
             

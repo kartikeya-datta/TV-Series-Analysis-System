@@ -1,5 +1,86 @@
+import gradio as gr
+from theme_classifier import ThemeClassifier
+import plotly.express as px
+
+def get_themes(theme_list, subtitles_path, save_path):
+    theme_list = theme_list.split(',')
+    theme_classifier = ThemeClassifier(theme_list)
+    output_df = theme_classifier.get_themes(subtitles_path, save_path)
+    
+    #Remove Dialogue from the Theme List
+    theme_list = [theme for theme in theme_list if theme != 'dialogue']
+    output_df = output_df[theme_list]
+    output_df = output_df[theme_list].sum().reset_index()
+    output_df.columns = ['theme', 'score']
+    
+        # Visualizing the Output using Plotly
+    fig = px.bar(
+        output_df,
+        x='score',
+        y='theme',
+        orientation='h',
+        color='score',
+        color_continuous_scale='viridis',
+        title='Series Themes',
+        labels={'score': 'Score', 'theme': 'Theme'},
+        width=500,
+        height=300 + (len(theme_list) * 2)
+    )
+    fig.update_layout(
+        xaxis_title="Score",
+        yaxis_title="Theme",
+                yaxis=dict(
+            automargin=True,
+            tickfont=dict(size=12),
+        ),
+        margin=dict(l=200, r=20, t=50, b=20)
+    )
+
+    return fig
+    
+#     #Visualizing the Output
+#     output_chart = gr.BarPlot(
+#     output_df,
+#     x='theme',
+#     y='score',
+#     title='Series Themes',
+#     tooltip=['theme', 'score'],
+#     color='score',
+#     vertical=False,
+#     color_scale="viridis",
+#     width=800, # Increased width
+#     height=300, # Increased height
+#     layout={'xaxis': {'tickangle': 45, 'tickfont': {'size': 10}}}
+# )
+    
+    
+#     # Get themes
+#     themes_df = theme_classifier.get_themes(subtitles_path, save_path)
+    
+#     # # Plotting
+#     # plot = gr.BarPlot()
+#     # plot.update(themes_df)
+    
+#     # return plot
+#     return output_chart
+
 def main():
-    print("Hello naruto")
+    with gr.Blocks() as iface:
+        with gr.Row():
+            with gr.Column():
+                gr.HTML("<h1 style='text-align: center;'>Theme Classification (Zero Shot Classifiers)</h1>")
+                with gr.Row():
+                    with gr.Column():
+                         plot = gr.Plot(label="Theme Plot")
+                    with gr.Column():
+                        theme_list = gr.Textbox(label="Themes", placeholder="Enter themes separated by commas")
+                        subtitltes_path = gr.Textbox(label="Subtitle or script Path", placeholder="Enter path to subtitles")
+                        save_path = gr.Textbox(label="Save Path", placeholder="Enter path to save the results")
+                        get_themes_button = gr.Button("Get Themes")
+                        get_themes_button.click(get_themes, inputs=[theme_list, subtitltes_path, save_path], outputs=plot)
+                    
+    iface.launch(share=True)
+                    
     
 if __name__ == "__main__":
     main()

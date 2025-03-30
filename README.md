@@ -20,3 +20,10 @@
     * The model's output (theme scores) was aggregated and averaged to produce a thematic profile for each episode.
 * **DataFrame Enrichment:**
     * The resulting theme data was then added to the original DataFrame, to create a DataFrame that contained both the original subtitle data and the theme classification data.
+
+
+- **I am going to use Gradio for creating an interactive demo of the model.**
+- I am using gradio to make a visuyal representation of the themes I want to choose and the inference of our model on the selected themes based on our subtitles. 
+- I have provided witht three text fields to enter namely themes, Subtitles and the path to save our file.
+- Using the data we will plot a Bar-Graph of all the themes to be visualised and their score based on the output of zero-shot classifier. 
+_ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle, self development, betrayal, love, dialogue. with a subtitle script path /Users/kartikeyadatta/Documents/Projects/Naruto/code/data/Subtitles anssd I saved my file to /Users/kartikeyadatta/Documents/Projects/Naruto/code/stubs/theme_classifier_output.csv

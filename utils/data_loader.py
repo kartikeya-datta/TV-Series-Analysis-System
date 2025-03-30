@@ -1,4 +1,4 @@
-from glob import glon
+from glob import glob
 import pandas as pd
 
 def load_subtitles_dataset(dataset_path):
