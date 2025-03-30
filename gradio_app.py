@@ -2,14 +2,18 @@ import gradio as gr
 from theme_classifier import ThemeClassifier
 import plotly.express as px
 
+
 def get_themes(theme_list, subtitles_path, save_path):
-    theme_list = theme_list.split(',')
+    theme_list = [theme.strip() for theme in theme_list.split(',')]
+
     theme_classifier = ThemeClassifier(theme_list)
     output_df = theme_classifier.get_themes(subtitles_path, save_path)
+    output_df.columns = [col.strip() for col in output_df.columns]
     
     #Remove Dialogue from the Theme List
     theme_list_no_dialogue = [theme for theme in theme_list if theme.lower() != 'dialogue']
     output_df = output_df[theme_list_no_dialogue]
+        
     output_df = output_df.sum().reset_index()
     output_df.columns = ['theme', 'score']
     
