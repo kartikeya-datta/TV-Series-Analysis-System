@@ -1,1 +1,4 @@
-myenv
+.myenv
+*.pyc
+*.ipynb_checkpoints
+*__pycache__/
