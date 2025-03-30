@@ -27,3 +27,7 @@
 - I have provided witht three text fields to enter namely themes, Subtitles and the path to save our file.
 - Using the data we will plot a Bar-Graph of all the themes to be visualised and their score based on the output of zero-shot classifier. 
 _ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle, self development, betrayal, love, dialogue. with a subtitle script path /Users/kartikeyadatta/Documents/Projects/Naruto/code/data/Subtitles anssd I saved my file to /Users/kartikeyadatta/Documents/Projects/Naruto/code/stubs/theme_classifier_output.csv
+
+- I have used the GPU of google colab to compute my theme classification outputnand stored it in the stubs folder to save the current data and use it to represenrt the theme classsification.
+
+
