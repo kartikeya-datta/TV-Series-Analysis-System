@@ -50,4 +50,6 @@ _ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle,
 
 - The output is a dynamic, interactive network graph (naruto.html) showing character relationships based on script proximity.
 
+- Have succesfully create a network of connection between characters in the naruto series.
+
 
