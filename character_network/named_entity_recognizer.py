@@ -54,3 +54,4 @@ class named_entity_recognizer:
         if save_path is not None:
             df.to_csv(save_path, index=False)
             
+        return df

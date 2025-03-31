@@ -74,7 +74,7 @@ def get_character_network(subtitles_path, ner_path):
     ner_df = ner.get_ners(subtitles_path, ner_path)
     
     character_network_generator = CharacterNetworkGenerator()
-    relationship_df = character_network_generator.geenerate_character_network(ner_df)
+    relationship_df = character_network_generator.generate_character_network(ner_df)
     html = character_network_generator.draw_network_graph(relationship_df)
     
     return html
