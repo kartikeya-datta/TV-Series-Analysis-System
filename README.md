@@ -32,3 +32,22 @@ _ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle,
 
 ![Theme Classification output](data/images/themeClassificationOutput.png)
 
+- **Creation of Named Entity Recognition**
+
+- Loaded the spaCy transformer model ("en_core_web_trf") to perform NER on the script dataset.
+
+- Extracted person names ("PERSON" label) and store first names in a set to avoid duplicates.
+
+-  Character Network Generation
+
+- Created a sliding window over sentences (size 10) to establish relationships based on character proximity.
+
+- Stored relationships in a DataFrame and aggregate connections.
+
+- Visualized the character network using NetworkX and PyVis, generating an interactive HTML graph.
+
+**Output**
+
+- The output is a dynamic, interactive network graph (naruto.html) showing character relationships based on script proximity.
+
+
