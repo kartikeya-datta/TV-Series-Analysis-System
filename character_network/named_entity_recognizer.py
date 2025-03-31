@@ -46,7 +46,6 @@ class named_entity_recognizer:
         
         #Loading the dataset
         df = load_subtitles_dataset(data_set_path)
-        df = df.head(10)  # limiting because of CPU
         
         #Run the inference
         df['ners'] = df['script'].apply(lambda x: self.get_ners_inference(x))
