@@ -3,7 +3,7 @@
 ## Theme Analysis Process in the jupyter notebook:
 
 * **Model Loading and Setup:**
-    * The "facebook/bart-large-mnli" model was loaded for zero-shot classification, configured for PyTorch and to run on a GPU if available. (I have used google colab for GPU powered tasks😄)
+    * The ![facebook/bart-large-mnli](https://huggingface.co/facebook/bart-large-mnli) model was loaded for zero-shot classification, configured for PyTorch and to run on a GPU if available. (I have used google colab for GPU powered tasks😄)
     * A list of themes (`theme_list`) was defined for the classification task.
     * A test classification was performed on a sample sentence to ensure the model was working.
 * **Subtitle Data Processing:**
@@ -52,6 +52,25 @@ _ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle,
 
 - Have succesfully create a network of connection between characters in the naruto series.
 
-_ Here is a visualisation of the Character relation graph based on their interaction in the subtitles.
+- Here is a visualisation of the Character relation graph based on their interaction in the subtitles.
 
 ![Character Relation](data/images/CharacterNersGraphs.png)
+
+- **Now am gaing to create a jutsu classification to refere to.**
+
+- Simplified the jutsu classification to the major three, which is **Ninjutsu** **Taijutsu** and **Genjutsu**.
+
+- cleaned the data and removed any noise from the json file if there any.
+
+- Tokenized the input for the model to implemet using preprocessing from scikit-learn.
+
+- I split the data into training and testing sets.
+
+- Shall  be using ![distilbertbase-uncased](https://huggingface.co/distilbert/distilbert-base-uncased) model for my tokenisation and fed forwarn to the nueral network.
+
+- Defined a preprocessing function to handle text input efficiently.
+
+- Converted Pandas DataFrames to Hugging Face Datasets and applied the tokenizer to the datasets for model readiness.
+
+- Got class weights to penalise the less data more as the data is more squed towards ninjutsu.
+

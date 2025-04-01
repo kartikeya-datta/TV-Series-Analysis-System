@@ -109,6 +109,20 @@ def main():
                         ner_path = gr.Textbox(label="NERs Save Path", placeholder="Enter path to save the results")
                         get_network_graph_button = gr.Button("Get Character Network")
                         get_network_graph_button.click(get_character_network, inputs=[subtitltes_path, ner_path], outputs=[network_html])
+                        
+                        
+        #Charactr Network section              
+        with gr.Row():
+            with gr.Column():
+                gr.HTML("<h1 style='text-align: center;'>Character (NERs and Graphs)</h1>")
+                with gr.Row():
+                    with gr.Column():
+                        network_html = gr.HTML(label="Character Network")
+                    with gr.Column():
+                        subtitltes_path = gr.Textbox(label="Subtitle or script Path", placeholder="Enter path to subtitles/Script")
+                        ner_path = gr.Textbox(label="NERs Save Path", placeholder="Enter path to save the results")
+                        get_network_graph_button = gr.Button("Get Character Network")
+                        get_network_graph_button.click(get_character_network, inputs=[subtitltes_path, ner_path], outputs=[network_html])
                     
     iface.launch(share=True)
                     
