@@ -3,7 +3,7 @@
 ## Theme Analysis Process in the jupyter notebook:
 
 * **Model Loading and Setup:**
-    * The "facebook/bart-large-mnli" model was loaded for zero-shot classification, configured for PyTorch and to run on a GPU if available.
+    * The "facebook/bart-large-mnli" model was loaded for zero-shot classification, configured for PyTorch and to run on a GPU if available. (I have used google colab for GPU powered tasks😄)
     * A list of themes (`theme_list`) was defined for the classification task.
     * A test classification was performed on a sample sentence to ensure the model was working.
 * **Subtitle Data Processing:**
@@ -52,4 +52,6 @@ _ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle,
 
 - Have succesfully create a network of connection between characters in the naruto series.
 
+_ Here is a visualisation of the Character relation graph based on their interaction in the subtitles.
 
+![Character Relation](data/images/CharacterNersGraphs.png)
