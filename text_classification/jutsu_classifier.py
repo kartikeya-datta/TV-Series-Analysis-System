@@ -15,8 +15,11 @@ from datasets import Dataset
 import gc
 from .training_utils import get_class_weights, compute_metrics
 from .custom_trainer import CustomTrainer
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
-class jutsu_classifier:
+class jutsu_classifier():
     def __init__(self,
                  model_path,
                  data_path,
@@ -25,7 +28,8 @@ class jutsu_classifier:
                  model_name = "distilbert/distilbert-base-uncased",
                  test_size = 0.2,
                  num_labels = 3,
-                 huggingface_token = None,):
+                 huggingface_token = os.getenv('hugging_face_token')):
+        
         self.model_path = model_path
         self.data_path = data_path
         self.text_column_name = text_clolumn_name
@@ -74,14 +78,17 @@ class jutsu_classifier:
             output_dir = self.model_path,
             learning_rate= 2e-4,
             per_device_train_batch_size= 8,
-            per_device_test_batch_size= 8,
+            per_device_eval_batch_size= 8,
             num_train_epochs= 5,
             weight_decay= 0.01,
             evaluation_strategy="epoch",
-            logginng_strategy="epoch",
+            logging_strategy="epoch",
             push_to_hub=True,
             )
         
+        device = torch.device("mps" if torch.backends.mps.is_available() else "cpu")
+        model.to(device)  # Move model to MPS if available
+
         trainer = CustomTrainer(
             model=model,
             args=training_args,
@@ -116,24 +123,24 @@ class jutsu_classifier:
             return "Taijutsu"
     
     def load_data(self, data_path):
-        df = pd.read_csv(data_path)
+        df = pd.read_json(self.data_path, lines=True)
         df['jutsu_type_simplified'] = df['jutsu_type'].apply(self.simplify_jutsus)
         df['text'] = df['jutsu_name'] + ". " + df['jutsu_description']
-        df['jutsu'] = df['jutsu_type_simplified']
-        df = df[['text', 'jutsu']]
+        df[self.label_column_name] = df['jutsu_type_simplified']
+        df = df[['text', self.label_column_name]]
         df = df.dropna()
         
         #cleaning the text
-        cleaner = cleaner()
-        df['text_cleaned'] = df[self.text_column_name].apply(cleaner.clean_text)
+        cleaner_obj = cleaner()
+        df['text_cleaned'] = df[self.text_column_name].apply(cleaner_obj.clean_text)
 
         #Encode Labels
         le = preprocessing.LabelEncoder()
-        le.fit(df[self.label_columdn_name].tolist())
+        le.fit(df[self.label_column_name].tolist())
         
         label_dict = {index:label_name for index, label_name in enumerate(le.__dict__['classes_'].tolist())}
         self.label_dict = label_dict
-        df['label'] = le.transform(df[self.label_columdn_name].tolist())
+        df['label'] = le.transform(df[self.label_column_name].tolist())
         
         #Split the data into train and test
         df_train, df_test = train_test_split(df, test_size=0.2, random_state=42, stratify=df['label'])

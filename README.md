@@ -74,3 +74,6 @@ _ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle,
 
 - Got class weights to penalise the less data more as the data is more squed towards ninjutsu.
 
+- Created a training_utils module to compute class weights and evaluation metrics, improving model robustness and evaluation.
+
+- Implemented a CustomTrainer class by extending Hugging Face’s Trainer to incorporate custom loss functions with class weighting, ensuring better learning from underrepresented classes.

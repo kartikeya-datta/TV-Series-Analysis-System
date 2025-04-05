@@ -2,7 +2,11 @@ import gradio as gr
 from theme_classifier import ThemeClassifier
 import plotly.express as px
 from character_network import CharacterNetworkGenerator, named_entity_recognizer
-
+from text_classification import jutsu_classifier
+import huggingface_hub
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 def get_themes(theme_list, subtitles_path, save_path):
     theme_list = [theme.strip() for theme in theme_list.split(',')]
@@ -79,6 +83,19 @@ def get_character_network(subtitles_path, ner_path):
     
     return html
 
+def classify_text(text_classification_model, text_classification_data_path, text_to_classify):
+    # Load the model
+    classifier = jutsu_classifier(
+        model_path=text_classification_model,
+        data_path=text_classification_data_path,
+        huggingface_token=os.getenv('hugging_face_token')
+    )
+    
+    # Classify the text
+    output = classifier.classify_jutsu(text_to_classify)
+    output = output[0]
+    return output
+
 def main():
     with gr.Blocks() as iface:
         
@@ -111,18 +128,19 @@ def main():
                         get_network_graph_button.click(get_character_network, inputs=[subtitltes_path, ner_path], outputs=[network_html])
                         
                         
-        #Charactr Network section              
+        #Text Classification with LLM's             
         with gr.Row():
             with gr.Column():
-                gr.HTML("<h1 style='text-align: center;'>Character (NERs and Graphs)</h1>")
+                gr.HTML("<h1 style='text-align: center;'>Text Classification with LLMs</h1>")
                 with gr.Row():
                     with gr.Column():
-                        network_html = gr.HTML(label="Character Network")
+                        text_classification_output = gr.Textbox(label="Text Classification Output", placeholder="Enter text to classify")
                     with gr.Column():
-                        subtitltes_path = gr.Textbox(label="Subtitle or script Path", placeholder="Enter path to subtitles/Script")
-                        ner_path = gr.Textbox(label="NERs Save Path", placeholder="Enter path to save the results")
-                        get_network_graph_button = gr.Button("Get Character Network")
-                        get_network_graph_button.click(get_character_network, inputs=[subtitltes_path, ner_path], outputs=[network_html])
+                        text_classification_model = gr.Textbox(label="Model path", placeholder="Enter models path")
+                        text_classification_data_path = gr.Textbox(label="Data Path", placeholder="Enter path to retrieve the data from")
+                        text_to_classify = gr.Textbox(label="Text inpout", placeholder="Pleae enter the text to classify")
+                        classify_text_button = gr.Button("Classify Text (Jutsu)")
+                        classify_text_button.click(classify_text, inputs=[text_classification_model, text_classification_data_path, text_to_classify], outputs=[text_classification_output])
                     
     iface.launch(share=True)
                     

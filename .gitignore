@@ -1,4 +1,6 @@
+.env
 .myenv
 *.pyc
 *.ipynb_checkpoints
 *__pycache__/
+**/kartikeyadatta/
