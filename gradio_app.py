@@ -5,7 +5,7 @@ from character_network import CharacterNetworkGenerator, named_entity_recognizer
 from text_classification import jutsu_classifier
 import huggingface_hub
 import os
-from character_chatbot import CharacterChatbot
+from character_chatbot import character_chatbot
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -98,7 +98,7 @@ def classify_text(text_classification_model, text_classification_data_path, text
     return output
 
 def chat_with_character_chatbot(message, history):
-    character_chatbot = CharacterChatbot("kartikeyadatta/Naruto_Meta-Llama-3-8B-Instruct",
+    character_chatbot = character_chatbot("kartikeyadatta/Naruto_Meta-Llama-3-8B-Instruct",
                                          huggingface_token=os.getenv('hugging_face_token'))
     
     output = character_chatbot.chat(message, history)
