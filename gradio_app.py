@@ -98,10 +98,10 @@ def classify_text(text_classification_model, text_classification_data_path, text
     return output
 
 def chat_with_character_chatbot(message, history):
-    character_chatbot = character_chatbot("kartikeyadatta/Naruto_Meta-Llama-3-8B-Instruct",
+    character_instance = character_chatbot("kartikeyadatta/Naruto_Meta-Llama-3-8B-Instruct",
                                          huggingface_token=os.getenv('hugging_face_token'))
     
-    output = character_chatbot.chat(message, history)
+    output = character_instance.chat(message, history)
     output = output['content'].strip()
     return output
 
