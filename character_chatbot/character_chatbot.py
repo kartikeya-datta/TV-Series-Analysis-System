@@ -10,6 +10,7 @@ from transformers import AutoTokenizer
 from peft import LoraConfig, PeftModel
 from trl import SFTTrainer, SFTConfig
 import gc
+import os
 
 
 def remove_paranthesis(text):
@@ -19,10 +20,16 @@ def remove_paranthesis(text):
 class character_chatbot():
     def __init__(self,
                  model_path,
-                 data_path = "/content/data/naruto.csv",
+                 data_path = None,
                  huggingface_token = None
                  ):
         self.model_path = model_path
+                # Set the default path to the file if data_path is not provided
+        if data_path is None:
+            # Use relative path to go up one directory and access 'data/naruto.csv'
+            self.data_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'naruto.csv')
+        else:
+            self.data_path = data_path
         self.data_path = data_path
         self.huggingface_token = huggingface_token
         self.base_model_path = "meta-llama/Meta-Llama-3-8B-Instruct"
