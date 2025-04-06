@@ -74,12 +74,14 @@ class character_chatbot():
             bnb_4bit_compute_dtype=torch.float16,     
         )
         pipeline = transformers.pipeline("text-generation",
-                                         model=model_path,
-                                         model_kwargs={"torch_dtype": torch.float16,
+                                        model=model_path,
+                                        model_kwargs={"torch_dtype": torch.float16,
                                                         "device_map": "auto",
                                                         "quantization_config": bnb_config,
                                                         "trust_remote_code": True})
-        return pipeline
+        model = pipeline.model
+        tokenizer = pipeline.tokenizer  # Assign tokenizer here
+        return model, tokenizer
                 
     
     def train(self,
@@ -99,7 +101,7 @@ class character_chatbot():
               ):
         
         bnb_config = BitsAndBytesConfig(
-            loasd_in_4bit=True,
+            load_in_4bit=True,
             bnb_4bit_quant_type="nf4",
             bnb_4bit_compute_dtype=torch.float16,     
         )
