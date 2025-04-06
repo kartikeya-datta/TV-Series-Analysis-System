@@ -77,3 +77,57 @@ _ The sample themes I have picked are friendship, hope, sacrifice, Loss, battle,
 - Created a training_utils module to compute class weights and evaluation metrics, improving model robustness and evaluation.
 
 - Implemented a CustomTrainer class by extending Hugging Face’s Trainer to incorporate custom loss functions with class weighting, ensuring better learning from underrepresented classes.
+
+- **🍥 Naruto-Themed Character Chatbot using Meta-Llama-3-8B-Instruct**
+- The Naruto Character Chatbot! 
+
+- This section of the project brings one of my favorite anime character, Naruto Uzumaki, to life using a fine-tuned large language model — Meta-Llama-3-8B-Instruct. Built using Hugging Face Transformers, PEFT (LoRA), Gradio, and various NLP techniques, the chatbot captures Naruto’s unique personality, speech patterns, and iconic attitude for interactive conversations.
+
+- This chatbot:
+
+    1. Uses Meta-Llama-3-8B-Instruct as the base model.
+
+    2. Is fine-tuned with real Naruto anime transcripts focused on Naruto’s dialogue.
+
+    3. Can chat with users while mimicking Naruto’s way of speaking.
+
+    4. Is integrated into a Gradio-based interactive web interface alongside other NLP features like theme classification, NER character network generation, and jutsu text classification.
+
+
+How It Works
+1. Dataset Preparation
+Loaded dialogue transcripts from naruto.csv.
+
+Filtered for meaningful Naruto responses (5+ words).
+
+Cleaned dialogue by removing parentheticals like (sighs) and action tags.
+
+Created a training dataset with prompts formatted in-character.
+
+2. Model Training
+Used Meta-Llama-3-8B-Instruct as the base model.
+
+Applied LoRA (Low-Rank Adaptation) for parameter-efficient fine-tuning.
+
+Used BitsAndBytes 4-bit quantization to reduce GPU memory usage.
+
+Trained for a few hundred steps using SFTTrainer from TRL (Transformers Reinforcement Learning).
+
+3. Model Deployment
+Saved and pushed the fine-tuned model and tokenizer to Hugging Face Hub:
+
+4. Chat Inference
+The chatbot reconstructs the chat history and uses a system prompt for personality enforcement.
+
+Generates character-consistent responses using text generation pipeline.
+
+5. Web App Integration (Gradio)
+Built a complete Gradio interface with:
+
+Theme Classification using Zero-Shot NLP (facebook/bart-large-mnli)
+
+Named Entity Recognition + Character Relationship Graph
+
+Jutsu Text Classification
+
+Naruto Chatbot Interface
