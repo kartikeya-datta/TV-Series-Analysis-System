@@ -129,32 +129,28 @@ class character_chatbot():
         )
 
         training_arguments = SFTConfig(
-        output_dir=output_dir,
-        per_device_train_batch_size = per_device_train_batch_size,
-        gradient_accumulation_steps = gradient_accumulation_steps,
-        optim = optim,
-        save_steps = save_steps,
-        logging_steps = logging_steps,
-        learning_rate = learning_rate,
-        fp16= True,
-        max_grad_norm = max_grad_norm,
-        max_steps = max_steps,
-        warmup_ratio = warmup_ratio,
-        group_by_length = True,
-        lr_scheduler_type = lr_scheduler_type,
-        report_to = "none"
+            output_dir=output_dir,
+            per_device_train_batch_size = per_device_train_batch_size,
+            gradient_accumulation_steps = gradient_accumulation_steps,
+            optim = optim,
+            save_steps = save_steps,
+            logging_steps = logging_steps,
+            learning_rate = learning_rate,
+            fp16= True,
+            max_grad_norm = max_grad_norm,
+            max_steps = max_steps,
+            warmup_ratio = warmup_ratio,
+            group_by_length = True,
+            lr_scheduler_type = lr_scheduler_type,
+            report_to = "none",
+            max_seq_length = 512,
         )
 
-        max_seq_len = 512
-
         trainer = SFTTrainer(
-            model = model,
+            model=model,
             train_dataset=dataset,
             peft_config=peft_config,
-            dataset_text_field="prompt",
-            max_seq_length=max_seq_len,
-            tokenizer=toknizer,
-            args = training_arguments,
+            args=training_arguments,
         )
 
         trainer.train()
@@ -205,7 +201,7 @@ class character_chatbot():
             prompt += naruto_transcript_df.iloc[ind]['line']
             prompts.append(prompt)
         
-        df = pd.DataFrame({"prompt":prompts})
+        df = pd.DataFrame({"text": prompts})
         dataset = Dataset.from_pandas(df)
 
         return dataset
