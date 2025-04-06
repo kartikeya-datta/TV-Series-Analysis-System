@@ -19,7 +19,7 @@ def remove_paranthesis(text):
 class character_chatbot():
     def __init__(self,
                  model_path,
-                 data_path = "/data/naruto.csv",
+                 data_path = "/content/data/naruto.csv",
                  huggingface_token = None
                  ):
         self.model_path = model_path
