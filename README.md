@@ -131,3 +131,25 @@ Named Entity Recognition + Character Relationship Graph
 Jutsu Text Classification
 
 Naruto Chatbot Interface
+
+# Improving Model Chat Performance
+
+Here's a plan to enhance the chat performance of the model:
+
+## Immediate Actions (✅ Do Now)
+
+* **Switch from pipeline to `model.generate()`:** Directly using the `model.generate()` method offers more fine-grained control over the generation process, potentially leading to more efficient inference.
+
+* **Reduce `max_new_tokens`:** Limiting the maximum number of newly generated tokens can significantly reduce latency, especially for shorter responses. Experiment with different values to find a good balance between speed and response length.
+
+* **Cache tokenizer and system prompt:** Pre-loading and caching the tokenizer and the system prompt (if it's consistent) can save processing time for each new interaction.
+
+## Optional Optimizations (🔧 Optional)
+
+* **Compile with `torch.compile()`:** Utilizing `torch.compile()` (if applicable to your model and environment) can optimize the model's execution graph for faster inference.
+
+* **Distill to smaller model:** If latency is a critical concern, consider distilling the current model into a smaller, more efficient architecture. This often involves a trade-off in model size and potentially some accuracy.
+
+* **Serve via FastAPI + ONNX:** Deploying the model using a high-performance web framework like FastAPI and converting the model to ONNX (Open Neural Network Exchange) format can lead to significant speed improvements and better resource utilization in a production setting.
+
+This README outlines the steps being considered to optimize the model's chat performance. The "Do Now" actions will be implemented immediately, while the "Optional" optimizations will be explored based on the initial performance improvements and resource constraints.
