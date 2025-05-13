@@ -1,4 +1,4 @@
-#  TV-Series_analysis-System
+#  TV-Series_Analysis-System
 
 - In this I will Develop a website using different features and technolagies I have laerned to create a universe of one my favourite anime namely naruto.
 
